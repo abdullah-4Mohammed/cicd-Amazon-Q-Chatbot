@@ -6,8 +6,8 @@ trigger:
     - main
   paths:
     include:
-    - cicd/templates/steps-deploy-shared.yaml
-    - cicd/shared-pipeline.yaml
+    - cicd/templates/steps-deploy-amazon-q.yaml
+    - cicd/amazon-q-pipeline.yaml
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -18,11 +18,11 @@ resources:
 variables:
  - template: variables/vars-global.yaml
 stages:
-  - Stage: Deploy_shared
-    displayName: Deploy shared resources
+  - Stage: Deploy_amazon_q
+    displayName: Deploy Amazon Q
     jobs:
-      - job:
-        displayName: Deploy shared resources
+      - job: Deploy_amazon_q
+        displayName: Deploy Amazon Q
         # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))     
         steps:
-        - template: templates/steps-deploy-shared.yaml
+        - template: cicd/templates/steps-deploy-amazon-q.yaml
