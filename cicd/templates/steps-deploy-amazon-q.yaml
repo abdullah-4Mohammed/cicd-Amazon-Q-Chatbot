@@ -1,0 +1,16 @@
+steps:
+
+- task: AWSCLI@1
+  displayName: 'Create Amazon Q Application'
+  inputs:
+    awsCredentials: '$(awsConnection)'
+    regionName: '$(region)'
+    awsCommand: 'qbusiness'
+    awsSubCommand: 'create-application'
+    awsArguments: >-
+      --display-name "$(applicationName)"
+      --identity-center-instance-arn "$(identityCenterInstanceARN)"
+      --role-arn "$(roleARN)"
+      --description "$(applicationDescription)"
+      --encryption-configuration "kmsKeyId=$(kmsKeyID)"
+      --attachments-configuration "attachmentsControlMode=ENABLED"
