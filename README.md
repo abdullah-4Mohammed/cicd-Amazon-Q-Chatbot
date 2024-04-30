@@ -1,3 +1,3 @@
-# SQS invok Lambda
-deploying SQS and lambda , SQS which will invoke the lambda. terraform for the iac deployment and azure devobs for the pipelining.
+# Amazon Q Chatbot
+deploying Amazon Q Chatbot that can retrive data from S3. Pdf files uploaded to S3 and used as data spurce. terraform for the iac deployment and azure devobs for the pipelining.
 
