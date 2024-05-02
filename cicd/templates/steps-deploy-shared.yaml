@@ -18,7 +18,7 @@ steps:
     awsArguments: >-
       --bucket "$(serviceName)-$(backendBucketName)-$(regionShortName)" 
       --region $(region)
-      --create-bucket-configuration "{\"LocationConstraint\":\"$(region)\"}"
+#      --create-bucket-configuration "{\"LocationConstraint\":\"$(region)\"}"
 
 # - task: AWSCLI@1
 #   displayName: Create an ECR
