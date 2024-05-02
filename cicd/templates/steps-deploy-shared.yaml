@@ -19,6 +19,7 @@ steps:
       --bucket "$(serviceName)-$(backendBucketName)-$(regionShortName)" 
       --region $(region)
 #      --create-bucket-configuration "{\"LocationConstraint\":\"$(region)\"}"
+# the --create-bucket-configuration cant be in us-east-1 but it nessary if you are using other region
 
 # - task: AWSCLI@1
 #   displayName: Create an ECR
