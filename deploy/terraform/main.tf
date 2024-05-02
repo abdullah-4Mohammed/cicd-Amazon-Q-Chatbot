@@ -1,84 +1,16 @@
-data "archive_file" "lambda_zip" {
-  type        = "zip"
-  source_file = "${path.module}/../../src/lambda/SQS-lam.js"
-  output_path = "${path.module}/../../src/lambda/SQS-lam.zip"
+// Create the S3 bucket 
+resource "aws_s3_bucket" "amazon-q-ds" {
+  bucket = "amazon-q-ds"
+  acl    = "private"
 }
 
-# add resource lambda function python ToBeInvoked
-resource "aws_lambda_function" "SQS-lam" {
-  function_name = "${local.resourceName}-SQS-lam"
-  handler = "SQS-lam.handler"
-  runtime = "nodejs18.x"
-  role = aws_iam_role.sqs-lam-role.arn 
-  filename = data.archive_file.lambda_zip.output_path
-  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
-}
-
-//add sqs queue to invoke lambda function
-resource "aws_sqs_queue" "SQS" {
-  name = "${local.resourceName}-SQS"
-}
-
-// add event source mapping sqs-lambda-source-mapping
-resource "aws_lambda_event_source_mapping" "sqs-lambda-source-mapping" {
-  event_source_arn = aws_sqs_queue.SQS.arn
-  function_name = aws_lambda_function.SQS-lam.arn
-}
-
-
-# Create the IAM role
-resource "aws_iam_role" "sqs-lam-role" {
-  name = "${local.resourceName}-sqs-lam-role"
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Action": "sts:AssumeRole"
-    }
-  ]
-}
-EOF
-}
-
-# Create the policy
-resource "aws_iam_policy" "sqs-lam-policy" {
-  name = "${local.resourceName}-sqs-lam-policy"
-  description = "Allow lambda to send logs to CloudWatch"
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": "arn:aws:logs:*:*:*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "sqs:SendMessage",
-        "sqs:ReceiveMessage",
-        "sqs:DeleteMessage",
-        "sqs:GetQueueAttributes"
-      ],
-      "Resource": "*"
-    }
-  ]
-}
-EOF
-}
-
-# Attach the policy to the role
-resource "aws_iam_role_policy_attachment" "sqs-lam-policy-attachment" {
-  role = aws_iam_role.sqs-lam-role.name
-  policy_arn = aws_iam_policy.sqs-lam-policy.arn
+// create amazon kendras index
+resource "aws_kendra_index" "Kendra-Index" {
+  name        = "kendra-index"
+  role_arn    = aws_iam_role.amazon-q-ds.arn
+  description = "Amazon Kendra index for Q&A data source"
+  edition     = "DEVELOPER_EDITION"
+  # server_side_encryption_configuration {
+  #   kms_key_id = aws_kms_key.amazon-q-ds.arn
+  # }
 }
