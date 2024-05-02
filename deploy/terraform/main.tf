@@ -1,7 +1,15 @@
 // Create the S3 bucket 
-resource "aws_s3_bucket" "amazon-q-ds" {
+resource "aws_s3_bucket" "amazon-q-ds-bucket" {
   bucket = "amazon-q-ds"
   acl    = "private"
+}
+
+// Use a local-exec provisioner to upload the files
+resource "null_resource" "upload_files" {
+  provisioner "local-exec" {
+    command = "aws s3 sync ./src/data s3://${aws_s3_bucket.amazon-q-ds-bucket.bucket}"
+  }
+  depends_on = [aws_s3_bucket.amazon-q-ds-bucket]
 }
 
 // create amazon kendras index
