@@ -4,11 +4,11 @@ resource "aws_s3_bucket" "amazon-q-ds-bucket" {
 
 }
 
-resource "aws_s3_bucket_acl" "amazon-q-ds-bucket" {
-  bucket = aws_s3_bucket.amazon-q-ds-bucket.id
-  acl    = "private"
-  depends_on = [ aws_s3_bucket.amazon-q-ds-bucket ]
-}
+# resource "aws_s3_bucket_acl" "amazon-q-ds-bucket" {
+#   bucket = aws_s3_bucket.amazon-q-ds-bucket.id
+#   acl    = "private"
+#   depends_on = [ aws_s3_bucket.amazon-q-ds-bucket ]
+# }
 
 // Use a local-exec provisioner to upload the files
 resource "null_resource" "upload_files" {
