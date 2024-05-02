@@ -8,7 +8,7 @@ steps:
     awsCommand: 'qbusiness'
     awsSubCommand: 'create-application'
     awsArguments: >-
-      --display-name "$(applicationName)"
+      --display-name "$(serviceName)"
       --identity-center-instance-arn "$(identityCenterInstanceARN)"
       --role-arn "$(roleARN)"
       --description "$(applicationDescription)"

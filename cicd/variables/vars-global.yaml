@@ -1,7 +1,8 @@
 variables:
-  region: eu-west-2
+  region: 'us-east-1'
   awsConnection: "AzToAWS"
   backendBucketName: "backend-tfstate"
-  backendBucket: "sqs-lam-backend-tfstate-euw2"
-  regionShortName: euw2
-  serviceName: sqs-lam
+  backendBucket: ""
+  regionShortName: use1
+  serviceName: amazon-q-chatbot
+  identityCenterInstanceARN: ""
