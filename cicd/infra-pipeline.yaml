@@ -6,7 +6,7 @@ trigger:
     - main
   paths:
     include:
-    - cicd
+    - cicd/templates/steps-deploy-terraform.yaml
     - deploy
     - src
 
