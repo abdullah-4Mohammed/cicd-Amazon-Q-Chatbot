@@ -13,4 +13,4 @@ steps:
       --role-arn "$(amazon-q-roleARN)"
       --description "Amazon Q Chatbot"
 #      --encryption-configuration "kmsKeyId=auto-kendra-1"
-      --attachments-configuration "attachmentsControlMode=ENABLED"
+#      --attachments-configuration "attachmentsControlMode=ENABLED"
