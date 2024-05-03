@@ -18,7 +18,7 @@ resources:
 variables:
  - template: variables/vars-global.yaml
 stages:
-  - Stage: Deploy_amazon_q
+  - stage: Deploy_amazon_q
     displayName: Deploy Amazon Q
     jobs:
       - job: Deploy_amazon_q
