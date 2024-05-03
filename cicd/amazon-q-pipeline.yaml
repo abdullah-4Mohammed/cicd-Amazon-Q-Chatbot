@@ -25,4 +25,4 @@ stages:
         displayName: Deploy Amazon Q
         # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))     
         steps:
-        - template: cicd/templates/steps-deploy-amazon-q.yaml
+        - template: templates/steps-deploy-amazon-q.yaml
