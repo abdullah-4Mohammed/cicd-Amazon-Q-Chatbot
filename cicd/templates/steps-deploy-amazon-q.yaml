@@ -1,19 +1,19 @@
 steps:
 
-- task: AWSCLI@1
-  displayName: 'Create Amazon Q Application'
-  inputs:
-    awsCredentials: '$(awsConnection)'
-    regionName: '$(region)'
-    awsCommand: 'qbusiness'
-    awsSubCommand: 'create-application'
-    awsArguments: >-
-      --display-name "$(serviceName)"
-      --identity-center-instance-arn "$(identityCenterInstanceARN)"
-      --role-arn "$(amazon-q-roleARN)"
-      --description "Amazon Q Chatbot"
-#      --encryption-configuration "kmsKeyId=auto-kendra-1"
-#      --attachments-configuration "attachmentsControlMode=ENABLED"
+# - task: AWSCLI@1
+#   displayName: 'Create Amazon Q Application'
+#   inputs:
+#     awsCredentials: '$(awsConnection)'
+#     regionName: '$(region)'
+#     awsCommand: 'qbusiness'
+#     awsSubCommand: 'create-application'
+#     awsArguments: >-
+#       --display-name "$(serviceName)"
+#       --identity-center-instance-arn "$(identityCenterInstanceARN)"
+#       --role-arn "$(amazon-q-roleARN)"
+#       --description "Amazon Q Chatbot"
+# #      --encryption-configuration "kmsKeyId=auto-kendra-1"
+# #      --attachments-configuration "attachmentsControlMode=ENABLED"
 
 # add web experience
 - task: AWSCLI@1
