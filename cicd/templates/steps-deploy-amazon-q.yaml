@@ -14,3 +14,29 @@ steps:
       --description "Amazon Q Chatbot"
 #      --encryption-configuration "kmsKeyId=auto-kendra-1"
 #      --attachments-configuration "attachmentsControlMode=ENABLED"
+
+# add web experience
+- task: AWSCLI@1
+  displayName: 'Create Web Experience'
+  inputs:
+    awsCredentials: '$(awsConnection)'
+    regionName: '$(region)'
+    awsCommand: 'qbusiness'
+    awsSubCommand: 'create-web-experience'
+    awsArguments: >-
+      --application-id "$(amazon-q-applicationId)"
+      --display-name "amazon-q-chatbot-web-experience"
+      --description "This is my Amazon Q web experience"
+
+# - task: AWSCLI@1
+#   displayName: 'Update Web Experience'
+#   inputs:
+#     awsCredentials: '$(awsConnection)'
+#     regionName: '$(region)'
+#     awsCommand: 'qbusiness'
+#     awsSubCommand: 'update-web-experience'
+#     awsArguments: >-
+#       --application-id "$(amazon-q-applicationId)"
+#       --web-experience-id "$(webExperienceId)"
+#       --display-name "My Wonderful Chatbot"
+#       --description "This is my customized Amazon Q web experience"
