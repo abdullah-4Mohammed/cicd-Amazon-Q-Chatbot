@@ -10,7 +10,7 @@ steps:
     awsArguments: >-
       --display-name "$(serviceName)"
       --identity-center-instance-arn "$(identityCenterInstanceARN)"
-      --role-arn "$(roleARN)"
-      --description "$(applicationDescription)"
-      --encryption-configuration "kmsKeyId=$(kmsKeyID)"
+      --role-arn "$(amazon-q-roleARN)"
+      --description "Amazon Q Chatbot"
+      --encryption-configuration "kmsKeyId=auto-kendra-1"
       --attachments-configuration "attachmentsControlMode=ENABLED"

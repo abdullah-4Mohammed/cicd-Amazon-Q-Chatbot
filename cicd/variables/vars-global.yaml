@@ -6,3 +6,4 @@ variables:
   regionShortName: use1
   serviceName: amazon-q-chatbot
   identityCenterInstanceARN: "arn:aws:sso:::instance/ssoins-7223f28fcc5e5709"
+  amazon-q-roleARN: "arn:aws:iam::767397720274:role/service-role/QBusiness-Application-h9k5u"
