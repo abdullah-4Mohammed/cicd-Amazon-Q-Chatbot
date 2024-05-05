@@ -16,6 +16,7 @@ steps:
 # #      --attachments-configuration "attachmentsControlMode=ENABLED"
 
 # add web experience
+
 - task: AWSCLI@1
   displayName: 'Create Web Experience'
   inputs:
@@ -25,8 +26,11 @@ steps:
     awsSubCommand: 'create-web-experience'
     awsArguments: >-
       --application-id "$(amazon-q-applicationId)"
-      --display-name "amazon-q-chatbot-web-experience"
-      --description "This is my Amazon Q web experience"
+      --title "Test Chatbot aws Q - Title"
+      --subtitle "Test subtitle"
+      --welcome-message "Hello, how can I help you today? - this is the welcome message"
+      --sample-prompts-control-mode "Hello"
+#      --role-arn "$(amazon-q-roleARN)"
 
 # - task: AWSCLI@1
 #   displayName: 'Update Web Experience'
@@ -37,6 +41,9 @@ steps:
 #     awsSubCommand: 'update-web-experience'
 #     awsArguments: >-
 #       --application-id "$(amazon-q-applicationId)"
-#       --web-experience-id "$(webExperienceId)"
-#       --display-name "My Wonderful Chatbot"
-#       --description "This is my customized Amazon Q web experience"
+#       --web-experience-id "<your-web-experience-id>"
+#       --role-arn "<role-arn>"
+#       --title "Updated Web Experience Title"
+#       --subtitle "Updated subtitle of your web experience"
+#       --welcome-message "Updated welcome message for your web experience"
+#       --sample-prompts-control-mode "DISABLED" # or "ENABLED" based on your preference
