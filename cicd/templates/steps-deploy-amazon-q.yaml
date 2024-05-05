@@ -30,7 +30,7 @@ steps:
       --subtitle "Test subtitle"
       --welcome-message "Hello, how can I help you today? - this is the welcome message"
       --sample-prompts-control-mode "DISABLED"
-#      --role-arn "$(amazon-q-roleARN)"
+      --role-arn "$(amazon-q-roleARN)"
 
 # - task: AWSCLI@1
 #   displayName: 'Update Web Experience'
