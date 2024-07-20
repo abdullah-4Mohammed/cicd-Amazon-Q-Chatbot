@@ -10,7 +10,7 @@ trigger:
     - deploy
     - src
 
-pool: 
+pool:
   vmImage: 'ubuntu-latest'
 
 resources:
