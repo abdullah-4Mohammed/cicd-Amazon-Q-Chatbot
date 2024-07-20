@@ -32,7 +32,7 @@ steps:
     command: 'plan'
     providerServiceAws: $(awsConnection)
     workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform'
-    commandOptions: '-var-file=vars.tfvars --out=$(environment).tfplan'
+    commandOptions: '- destroy -var-file=vars.tfvars --out=$(environment).tfplan'
     publishPlanResults: 'plan'
     providerAwsRegion: $(region)
     allowTelemetryCollection: true
