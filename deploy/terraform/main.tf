@@ -1,8 +1,11 @@
 // Create the S3 bucket 
 resource "aws_s3_bucket" "amazon-q-ds-bucket" {
-  bucket = "amazon-q-ds"
+  bucket = "${var.serviceShortName}-datasource-bucket"
 
 }
+#"amazon-q-ds-bucket" is the local name of the resource within your Terraform configuration. 
+#This name is used to refer to this resource within your Terraform configuration. 
+#It doesn't have to match the name of the S3 bucket in AWS.
 
 # resource "aws_s3_bucket_acl" "amazon-q-ds-bucket" {
 #   bucket = aws_s3_bucket.amazon-q-ds-bucket.id
