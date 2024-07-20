@@ -28,6 +28,7 @@ parameters:
 #   type: object
 #   default: ['dev']
 
+
 stages:
 - ${{ each env in parameters.environments }}:
   - stage: Deploy_${{ env }}
