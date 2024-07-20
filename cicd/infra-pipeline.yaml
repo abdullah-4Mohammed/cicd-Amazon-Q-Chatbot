@@ -6,6 +6,7 @@ trigger:
     - main
   paths:
     include:
+    - cicd/infr-pipeline.yaml
     - cicd/templates/steps-deploy-tf.yaml
     - deploy
     - src
