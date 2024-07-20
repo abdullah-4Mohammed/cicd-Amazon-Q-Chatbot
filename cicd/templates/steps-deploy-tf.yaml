@@ -37,7 +37,7 @@ steps:
     providerAwsRegion: $(region)
     allowTelemetryCollection: true
 
-- task: TerraformCLI@2 #charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-cli.TerraformCLI@0
+- task: TerraformCLI@2 
   displayName: 'Terraform apply'
   inputs:
     command: 'apply'
@@ -48,27 +48,3 @@ steps:
     providerAwsRegion: $(region)
 
 
-
-# - task: TerraformTaskV3@0
-#   displayName: "Terraform plan"
-#   inputs:
-#     provider: 'aws' 
-#     command: 'plan'
-#     workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform'
-#     commandOptions: '-var-file=vars.tfvars --out=$(environment).tfplan'
-#     environmentServiceNameAWS: "AzDo-AwL-aws" #'$(awsConnection)' #"AzDo-AwL-Training" #'$(awsConnection)'
-#     backendAWSBucketName: '$(backendBucket)'
-#     backendAWSKey: 'tf/$(environment).tfstate'
-#     allowTelemetryCollection: true
-
-# - task: TerraformTaskV3@0
-#   displayName: "Terraform apply"
-#   inputs:
-#     provider: 'aws'
-#     command: 'apply'
-#     workingDirectory: '$(System.DefaultWorkingDirectory)/deploy/terraform'
-#     commandOptions: '-auto-approve $(environment).tfplan'
-#     environmentServiceNameAWS: "AzDo-AwL-aws" #'$(awsConnection)'
-#     backendAWSBucketName: '$(backendBucket)'
-#     backendAWSKey: 'tf/$(environment).tfstate'
-#     allowTelemetryCollection: true
