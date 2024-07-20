@@ -2,7 +2,7 @@ variables:
   region: 'us-east-1'
   awsConnection: "AzToAWS"
   backendBucketName: "backend-tfstate"
-  backendBucket: ""
+  backendBucket: "arn:aws:s3:::survey-assistant-backend-tfstate-use1"
   regionShortName: "use1"
   serviceName: "survey-assistant"
   identityCenterInstanceARN: "arn:aws:sso:::instance/ssoins-72231ea94955ab62"
