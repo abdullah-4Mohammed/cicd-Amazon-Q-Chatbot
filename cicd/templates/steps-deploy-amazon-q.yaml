@@ -17,20 +17,20 @@ steps:
 
 # add web experience
  
-- task: AWSCLI@1
-  displayName: 'Create Web Experience'
-  inputs:
-    awsCredentials: '$(awsConnection)'
-    regionName: '$(region)'
-    awsCommand: 'qbusiness'
-    awsSubCommand: 'create-web-experience'
-    awsArguments: >-
-      --application-id "$(amazon-q-applicationId)"
-      --title "Test Chatbot - Title"
-      --subtitle "Test- subtitle"
-      --welcome-message "Hello, how can I help you today? - this is the welcome message"
-      --sample-prompts-control-mode "DISABLED"
-      --role-arn "$(amazon-q-roleARN)"
+# - task: AWSCLI@1
+#   displayName: 'Create Web Experience'
+#   inputs:
+#     awsCredentials: '$(awsConnection)'
+#     regionName: '$(region)'
+#     awsCommand: 'qbusiness'
+#     awsSubCommand: 'create-web-experience'
+#     awsArguments: >-
+#       --application-id "$(amazon-q-applicationId)"
+#       --title "Test Chatbot - Title"
+#       --subtitle "Test - subtitle"
+#       --welcome-message "Hello, how can I help you today? - this is the welcome message"
+#       --sample-prompts-control-mode "DISABLED"
+#       --role-arn "$(amazon-q-roleARN)"
 
 # - task: AWSCLI@1
 #   displayName: 'List Web Experiences'
