@@ -2,7 +2,7 @@ variable "environment" {
   type = string
 }
 
-variable "serviceShortName" {
+variable "serviceName" {
   type = string
 }
 

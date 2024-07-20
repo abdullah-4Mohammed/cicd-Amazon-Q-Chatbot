@@ -1,6 +1,6 @@
 // Create the S3 bucket 
 resource "aws_s3_bucket" "amazon-q-ds-bucket" {
-  bucket = "${var.serviceShortName}-datasource-bucket"
+  bucket = "${var.serviceName}-datasource-bucket"
 
 }
 #"amazon-q-ds-bucket" is the local name of the resource within your Terraform configuration. 
