@@ -2,9 +2,9 @@ variables:
   region: 'us-east-1'
   awsConnection: "AzToAWS"
   backendBucketName: "backend-tfstate"
-  backendBucket: "amazon-q-chatbot-backend-tfstate-use1"
-  regionShortName: use1
-  serviceName: survey-assistant
+  backendBucket: ""
+  regionShortName: "use1"
+  serviceName: "survey-assistant"
   identityCenterInstanceARN: ""
   amazon-q-roleARN: "arn:aws:iam::975050226089:role/aws-service-role/qbusiness.amazonaws.com/AWSServiceRoleForQBusiness"
   amazon-q-applicationId: ""
