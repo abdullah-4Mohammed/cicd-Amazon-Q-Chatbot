@@ -36,19 +36,10 @@ steps:
     inlineScript: |
       output=$(aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot")
       applicationId=$(echo $output | jq -r '.applicationId')
-      echo "##vso[task.setvariable variable=amazonQApplicationId]$applicationId"
+      echo "##vso[task.setvariable variable=amazon-q-applicationId]$applicationId"
   continueOnError: false
   condition: succeededOrFailed()
   name: createApplication  # This name allows referencing the task output in subsequent steps.
-
-
-# - bash: |
-#     echo "Capturing Application ID from the output"
-#     output=$(cat $(Agent.TempDirectory)/AWSCLI/createApplication/*.stdout)
-#     applicationId=$(echo $output | jq -r '.applicationId')
-#     echo "##vso[task.setvariable variable=amazonQApplicationId]$applicationId"
-#   displayName: 'Capture Application ID'
-#   condition: succeeded()
 
 - task: AWSCLI@1
   displayName: 'Create Web Experience'
@@ -58,21 +49,13 @@ steps:
     awsCommand: 'qbusiness'
     awsSubCommand: 'create-web-experience'
     awsArguments: >-
-      --application-id "$(amazonQApplicationId)"
+      --application-id "$(amazon-q-applicationId)"
       --title "Test Chatbot - Title"
       --subtitle "Test - subtitle"
       --welcome-message "Hello, how can I help you today? - this is the welcome message"
       --sample-prompts-control-mode "DISABLED"
       --role-arn "$(amazon-q-roleARN)"
   name: createWebExperience  # Naming this task for referencing in the next step.
-
-# - bash: |
-#     echo "Capturing Web Experience ID from the output"
-#     output=$(cat $(Agent.TempDirectory)/AWSCLI/createWebExperience/*.stdout)
-#     webExperienceId=$(echo $output | jq -r '.webExperienceId')
-#     echo "##vso[task.setvariable variable=amazonQWebExperienceId]$webExperienceId"
-#   displayName: 'Capture Web Experience ID'
-#   condition: succeeded()
 
 - task: AWSCLI@1
   displayName: 'List Web Experiences'
@@ -82,7 +65,7 @@ steps:
     awsCommand: 'qbusiness'
     awsSubCommand: 'get-web-experience'
     awsArguments: >-
-      --application-id "$(amazonQApplicationId)"
+      --application-id "$(amazon-q-applicationId)"
       --max-results 10
 
 # - task: AWSCLI@1
@@ -93,59 +76,10 @@ steps:
 #     awsCommand: 'qbusiness'
 #     awsSubCommand: 'update-web-experience'
 #     awsArguments: >-
-#       --application-id "$(amazonQApplicationId)"
+#       --application-id "$(amazon-q-applicationId)"
 #       --web-experience-id "$(amazonQWebExperienceId)"
 #       --role-arn "$(amazon-q-roleARN)"
 #       --title "Updated Web Experience Title"
 #       --subtitle "Updated subtitle of your web experience"
 #       --welcome-message "Updated welcome message for your web experience"
 #       --sample-prompts-control-mode "DISABLED"
-
-
-
-
-
-# add web experience
- 
-# - task: AWSCLI@1
-#   displayName: 'Create Web Experience'
-#   inputs:
-#     awsCredentials: '$(awsConnection)'
-#     regionName: '$(region)'
-#     awsCommand: 'qbusiness'
-#     awsSubCommand: 'create-web-experience'
-#     awsArguments: >-
-#       --application-id "$(amazon-q-applicationId)"
-#       --title "Test Chatbot - Title"
-#       --subtitle "Test - subtitle"
-#       --welcome-message "Hello, how can I help you today? - this is the welcome message"
-#       --sample-prompts-control-mode "DISABLED"
-#       --role-arn "$(amazon-q-roleARN)"
-
-# - task: AWSCLI@1
-#   displayName: 'List Web Experiences'
-#   inputs:
-#     awsCredentials: '$(awsConnection)'
-#     regionName: '$(region)'
-#     awsCommand: 'qbusiness'
-#     awsSubCommand: 'get-web-experience'
-#     awsArguments: >-
-#       --application-id "$(amazon-q-applicationId)"
-#       --max-results 10
-
-
-# - task: AWSCLI@1
-#   displayName: 'Update Web Experience'
-#   inputs:
-#     awsCredentials: '$(awsConnection)'
-#     regionName: '$(region)'
-#     awsCommand: 'qbusiness'
-#     awsSubCommand: 'update-web-experience'
-#     awsArguments: >-
-#       --application-id "$(amazon-q-applicationId)"
-#       --web-experience-id "<your-web-experience-id>"
-#       --role-arn "<role-arn>"
-#       --title "Updated Web Experience Title"
-#       --subtitle "Updated subtitle of your web experience"
-#       --welcome-message "Updated welcome message for your web experience"
-#       --sample-prompts-control-mode "DISABLED" 

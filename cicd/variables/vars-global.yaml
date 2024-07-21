@@ -7,5 +7,5 @@ variables:
   serviceName: "survey-assistant"
   identityCenterInstanceARN: "arn:aws:sso:::instance/ssoins-72231ea94955ab62"
   amazon-q-roleARN: "arn:aws:iam::975050226089:role/aws-service-role/qbusiness.amazonaws.com/AWSServiceRoleForQBusiness"
-  amazon-q-applicationId: ""
+  amazon-q-applicationId: 
   web-experience-roleARN: "arn:aws:iam::975050226089:role/service-role/QBusiness-WebExperience-lrigl"
