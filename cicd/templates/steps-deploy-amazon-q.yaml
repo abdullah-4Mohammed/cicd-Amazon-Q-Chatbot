@@ -14,18 +14,17 @@ steps:
       --description "Amazon Q Chatbot"
 #      --encryption-configuration "kmsKeyId=auto-kendra-1"
 #      --attachments-configuration "attachmentsControlMode=ENABLED"
-  continueOnError: true
+  continueOnError: false
   condition: succeededOrFailed()
+  name: createApplication  # This name allows referencing the task output in subsequent steps.
 
 - bash: |
     echo "Capturing Application ID from the output"
-    output=$(cat $(Agent.TempDirectory)/AWSCLITask1/*.stdout)
+    output=$(cat $(Agent.TempDirectory)/AWSCLI/createApplication/*.stdout)
     applicationId=$(echo $output | jq -r '.applicationId')
     echo "##vso[task.setvariable variable=amazonQApplicationId]$applicationId"
   displayName: 'Capture Application ID'
   condition: succeeded()
-  env:
-    AWSCLI_OUTPUT: $(task.completedOutput.stdout)
 
 - task: AWSCLI@1
   displayName: 'Create Web Experience'
@@ -41,18 +40,15 @@ steps:
       --welcome-message "Hello, how can I help you today? - this is the welcome message"
       --sample-prompts-control-mode "DISABLED"
       --role-arn "$(amazon-q-roleARN)"
-  continueOnError: true
-  condition: succeededOrFailed()
+  name: createWebExperience  # Naming this task for referencing in the next step.
 
 - bash: |
     echo "Capturing Web Experience ID from the output"
-    output=$(cat $(Agent.TempDirectory)/AWSCLITask2/*.stdout)
+    output=$(cat $(Agent.TempDirectory)/AWSCLI/createWebExperience/*.stdout)
     webExperienceId=$(echo $output | jq -r '.webExperienceId')
     echo "##vso[task.setvariable variable=amazonQWebExperienceId]$webExperienceId"
   displayName: 'Capture Web Experience ID'
   condition: succeeded()
-  env:
-    AWSCLI_OUTPUT: $(task.completedOutput.stdout)
 
 - task: AWSCLI@1
   displayName: 'List Web Experiences'
