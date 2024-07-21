@@ -1,7 +1,26 @@
 steps:
 
+# - task: AWSCLI@1
+#   displayName: 'Create Amazon Q Application'
+#   inputs:
+#     awsCredentials: '$(awsConnection)'
+#     regionName: '$(region)'
+#     awsCommand: 'qbusiness'
+#     awsSubCommand: 'create-application'
+#     awsArguments: >-
+#       --display-name "$(serviceName)"
+#       --identity-center-instance-arn "$(identityCenterInstanceARN)"
+#       --role-arn "$(amazon-q-roleARN)"
+#       --description "Amazon Q Chatbot"
+# #      --encryption-configuration "kmsKeyId=auto-kendra-1"
+# #      --attachments-configuration "attachmentsControlMode=ENABLED"
+#   continueOnError: false
+#   condition: succeededOrFailed()
+#   name: createApplication  # This name allows referencing the task output in subsequent steps.
+
+
 - task: AWSCLI@1
-  displayName: 'Create Amazon Q Application'
+  displayName: 'Create Application'
   inputs:
     awsCredentials: '$(awsConnection)'
     regionName: '$(region)'
@@ -12,19 +31,24 @@ steps:
       --identity-center-instance-arn "$(identityCenterInstanceARN)"
       --role-arn "$(amazon-q-roleARN)"
       --description "Amazon Q Chatbot"
-#      --encryption-configuration "kmsKeyId=auto-kendra-1"
-#      --attachments-configuration "attachmentsControlMode=ENABLED"
+    scriptType: 'bash'
+    scriptLocation: 'inline'
+    inlineScript: |
+      output=$(aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot")
+      applicationId=$(echo $output | jq -r '.applicationId')
+      echo "##vso[task.setvariable variable=amazonQApplicationId]$applicationId"
   continueOnError: false
   condition: succeededOrFailed()
   name: createApplication  # This name allows referencing the task output in subsequent steps.
 
-- bash: |
-    echo "Capturing Application ID from the output"
-    output=$(cat $(Agent.TempDirectory)/AWSCLI/createApplication/*.stdout)
-    applicationId=$(echo $output | jq -r '.applicationId')
-    echo "##vso[task.setvariable variable=amazonQApplicationId]$applicationId"
-  displayName: 'Capture Application ID'
-  condition: succeeded()
+
+# - bash: |
+#     echo "Capturing Application ID from the output"
+#     output=$(cat $(Agent.TempDirectory)/AWSCLI/createApplication/*.stdout)
+#     applicationId=$(echo $output | jq -r '.applicationId')
+#     echo "##vso[task.setvariable variable=amazonQApplicationId]$applicationId"
+#   displayName: 'Capture Application ID'
+#   condition: succeeded()
 
 - task: AWSCLI@1
   displayName: 'Create Web Experience'
@@ -42,13 +66,13 @@ steps:
       --role-arn "$(amazon-q-roleARN)"
   name: createWebExperience  # Naming this task for referencing in the next step.
 
-- bash: |
-    echo "Capturing Web Experience ID from the output"
-    output=$(cat $(Agent.TempDirectory)/AWSCLI/createWebExperience/*.stdout)
-    webExperienceId=$(echo $output | jq -r '.webExperienceId')
-    echo "##vso[task.setvariable variable=amazonQWebExperienceId]$webExperienceId"
-  displayName: 'Capture Web Experience ID'
-  condition: succeeded()
+# - bash: |
+#     echo "Capturing Web Experience ID from the output"
+#     output=$(cat $(Agent.TempDirectory)/AWSCLI/createWebExperience/*.stdout)
+#     webExperienceId=$(echo $output | jq -r '.webExperienceId')
+#     echo "##vso[task.setvariable variable=amazonQWebExperienceId]$webExperienceId"
+#   displayName: 'Capture Web Experience ID'
+#   condition: succeeded()
 
 - task: AWSCLI@1
   displayName: 'List Web Experiences'
