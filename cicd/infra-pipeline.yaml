@@ -17,6 +17,7 @@ pool:
 resources:
 - repo: self
 
+
 variables:
 - template: variables/vars-global.yaml
 
