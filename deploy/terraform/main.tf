@@ -1,7 +1,7 @@
 // Create the S3 bucket 
 resource "aws_s3_bucket" "amazon-q-ds-bucket" {
   bucket = "${var.serviceName}-datasource-bucket"
-  force_destroy = alltrue()
+  force_destroy = true
 
 }
 #"amazon-q-ds-bucket" is the local name of the resource within your Terraform configuration. 
