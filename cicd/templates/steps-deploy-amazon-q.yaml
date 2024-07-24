@@ -1,20 +1,33 @@
 steps:
 - task: Bash@3
+  displayName: 'Create Application - Direct Command'
+  inputs:
+    targetType: 'inline'
+    script: |
+      aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot"
+  continueOnError: false
+  condition: always()
+  name: createApplicationDirect
+
+- task: Bash@3
   displayName: 'Create Application and Capture Application ID'
   inputs:
     targetType: 'inline'
     script: |
       aws --version
 
-      output=$(aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot")
+      output=$(aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot" 2>&1
 
       echo "AWS CLI output: $output"
 
-      applicationId=$(echo "$output" | jq -r '.applicationId')
-
-      echo "##vso[task.setvariable variable=q-applicationId]$applicationId"
-
-      echo "Application ID: $applicationId"
+      if echo "$output" | jq .; then
+        applicationId=$(echo "$output" | jq -r '.applicationId')
+        echo "##vso[task.setvariable variable=q-applicationId]$applicationId"
+        echo "Application ID: $applicationId"
+      else
+        echo "Failed to parse JSON output."
+        exit 1
+      fi
   continueOnError: false
   condition: always()
   name: createAndSetApplicationId
@@ -36,7 +49,6 @@ steps:
   name: createWebExperience
   continueOnError: false
   condition: always()
-
 
 
 
