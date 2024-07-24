@@ -4,16 +4,16 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-# Create the application and capture the output
+
       output=$(aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot")
 
-# Extract the applicationId using jq
+
       applicationId=$(echo "$output" | jq -r '.applicationId')
 
-# Set the applicationId as a pipeline variable
+
       echo "##vso[task.setvariable variable=q-applicationId]$applicationId"
 
-# Output the applicationId for debugging purposes
+
       echo "Application ID: $applicationId"
   continueOnError: false
   condition: always()
