@@ -20,7 +20,7 @@ steps:
       echo "AWS CLI version: $aws_version"
 
       # Check if necessary variables are set
-      if [ -z "$serviceName" ] || [ -z "$identityCenterInstanceARN" ] || [ -z "$amazon-q-roleARN" ]; then
+      if [ -z "$(serviceName)" ] || [ -z "$identityCenterInstanceARN" ] || [ -z "$amazon-q-roleARN" ]; then
         echo "One or more required variables are not set"
         exit 1
       fi
@@ -32,7 +32,7 @@ steps:
       echo "application_Id: $(application_Id)"
   name: createApplication
 
-  
+
 # - task: AWSCLI@1
 #   displayName: 'Create Application'
 #   inputs:
