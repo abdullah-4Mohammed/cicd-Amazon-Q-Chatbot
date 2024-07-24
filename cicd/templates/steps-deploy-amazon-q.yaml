@@ -6,15 +6,13 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      set -ex
+      set -euxo pipefail
       output=$(aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot")
       applicationId=$(echo $output | jq -r '.applicationId')
       echo "##vso[task.setvariable variable=application_Id;isOutput=true]$applicationId"
       echo "applicationId: $applicationId"
       echo "application_Id: $(application_Id)"
   name: createApplication
-
-
 
 # - task: AWSCLI@1
 #   displayName: 'Create Application'
