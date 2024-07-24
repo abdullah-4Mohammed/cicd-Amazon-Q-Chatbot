@@ -14,9 +14,7 @@ steps:
       --description "Amazon Q Chatbot"
       --query 'applicationId' --output text
     continueOnError: false
-    condition: succeededOrFailed()
-    outputs:
-      applicationId: $(awsCli.outputs.applicationId)  
+    condition: succeededOrFailed()  
   name: createApplication
 
 - task: AWSCLI@1
