@@ -15,9 +15,9 @@ steps:
       --query 'applicationId' --output text
     continueOnError: false
     condition: succeededOrFailed()
-    name: createApplication
-  outputs:
-    applicationId: $(awsCli.outputs.applicationId)  
+    outputs:
+      applicationId: $(awsCli.outputs.applicationId)  
+  name: createApplication
 
 - task: AWSCLI@1
   displayName: 'Create Web Experience'
