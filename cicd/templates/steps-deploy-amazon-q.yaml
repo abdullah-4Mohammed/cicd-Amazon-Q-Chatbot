@@ -1,44 +1,60 @@
 
 steps:
-- task: AWSCLI@1
+
+- task: Bash@3
   displayName: 'Create Application'
   inputs:
-    awsCredentials: '$(awsConnection)'
-    regionName: '$(region)'
-    awsCommand: 'qbusiness'
-    awsSubCommand: 'create-application'
-    awsArguments: >-
-      --display-name "$(serviceName)"
-      --identity-center-instance-arn "$(identityCenterInstanceARN)"
-      --role-arn "$(amazon-q-roleARN)"
-      --description "Amazon Q Chatbot"
-
-    scriptType: 'inline'
-    inlineScript: |
+    targetType: 'inline'
+    script: |
       set -ex
-      applicationId=$(aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot" --query 'applicationId' --output text)
+      output=$(aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot")
+      applicationId=$(echo $output | jq -r '.applicationId')
       echo "##vso[task.setvariable variable=application_Id;isOutput=true]$applicationId"
       echo "applicationId: $applicationId"
       echo "application_Id: $(application_Id)"
-#    continueOnError: false
-#    condition: succeededOrFailed()
   name: createApplication
 
-- task: AWSCLI@1
-  displayName: 'Create Web Experience'
-  inputs:
-    awsCredentials: '$(awsConnection)'
-    regionName: '$(region)'
-    awsCommand: 'qbusiness'
-    awsSubCommand: 'create-web-experience'
-    awsArguments: >-
-      --application-id "$(application_Id)"  
-      --title "Test Chatbot - Title"
-      --subtitle "Test - subtitle"
-      --welcome-message "Hello, how can I help you today? - this is the welcome message"
-      --sample-prompts-control-mode "DISABLED"
-      --role-arn "$(amazon-q-roleARN)"
-  name: createWebExperience
+
+
+# - task: AWSCLI@1
+#   displayName: 'Create Application'
+#   inputs:
+#     awsCredentials: '$(awsConnection)'
+#     regionName: '$(region)'
+#     awsCommand: 'qbusiness'
+#     awsSubCommand: 'create-application'
+#     awsArguments: >-
+#       --display-name "$(serviceName)"
+#       --identity-center-instance-arn "$(identityCenterInstanceARN)"
+#       --role-arn "$(amazon-q-roleARN)"
+#       --description "Amazon Q Chatbot"
+
+#     scriptType: 'inline'
+#     inlineScript: |
+#       set -ex
+#       applicationId=$(aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot" --query 'applicationId' --output text)
+#       echo "##vso[task.setvariable variable=application_Id;isOutput=true]$applicationId"
+#       echo "applicationId: $applicationId"
+#       echo "application_Id: $(application_Id)"
+# #    continueOnError: false
+# #    condition: succeededOrFailed()
+#   name: createApplication
+
+# - task: AWSCLI@1
+#   displayName: 'Create Web Experience'
+#   inputs:
+#     awsCredentials: '$(awsConnection)'
+#     regionName: '$(region)'
+#     awsCommand: 'qbusiness'
+#     awsSubCommand: 'create-web-experience'
+#     awsArguments: >-
+#       --application-id "$(application_Id)"  
+#       --title "Test Chatbot - Title"
+#       --subtitle "Test - subtitle"
+#       --welcome-message "Hello, how can I help you today? - this is the welcome message"
+#       --sample-prompts-control-mode "DISABLED"
+#       --role-arn "$(amazon-q-roleARN)"
+#   name: createWebExperience
 
 
 
