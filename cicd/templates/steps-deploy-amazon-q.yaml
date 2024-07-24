@@ -4,15 +4,15 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      aws --version
 
       output=$(aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot")
 
+      echo "AWS CLI output: $output"
 
       applicationId=$(echo "$output" | jq -r '.applicationId')
 
-
       echo "##vso[task.setvariable variable=q-applicationId]$applicationId"
-
 
       echo "Application ID: $applicationId"
   continueOnError: false
@@ -36,6 +36,7 @@ steps:
   name: createWebExperience
   continueOnError: false
   condition: always()
+
 
 
 
