@@ -15,6 +15,7 @@ steps:
       --query 'applicationId' --output text
     scriptType: 'inline'
     inlineScript: |
+      set -ex
       echo "##vso[task.setvariable variable=application_Id;isOutput=true]$applicationId"
       echo "applicationId: $applicationId"
       echo "application_Id: $(application_Id)"
