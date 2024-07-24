@@ -25,7 +25,7 @@ steps:
         exit 1
       fi
 
-      output=$(aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot")
+      output=$(aws qbusiness create-application --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot" --debug)
       applicationId=$(echo $output | jq -r '.applicationId')
       echo "##vso[task.setvariable variable=application_Id;isOutput=true]$applicationId"
       echo "applicationId: $applicationId"
