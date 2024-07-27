@@ -1,3 +1,25 @@
+# steps:
+# - task: AWSShellScript@1
+#   displayName: 'Create Application'
+#   inputs:
+#     awsCredentials: '$(awsConnection)'
+#     regionName: '$(region)'
+#     scriptType: 'inline'
+#     inlineScript: |
+#       set -euxo pipefail
+
+#       # Run the AWS CLI command
+#       output=$(aws qbusiness create-application --region "$(region)" --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot" --output json)
+
+#       # Extract the applicationId using jq
+#       applicationId=$(echo "$output" | jq -r '.applicationId')
+
+#       # Set the pipeline variable
+#       echo "##vso[task.setvariable variable=application_Id;isOutput=true]$applicationId"
+
+#       # Print the applicationId for debugging
+#       echo "applicationId: $applicationId"
+#   name: createApplication
 steps:
 - task: AWSShellScript@1
   displayName: 'Create Application'
@@ -6,13 +28,18 @@ steps:
     regionName: '$(region)'
     scriptType: 'inline'
     inlineScript: |
-      set -euxo pipefail
+      set -euo pipefail
 
-      # Run the AWS CLI command
-      output=$(aws qbusiness create-application --region "$(region)" --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot" --output json)
+      # Try to create the application
+      output=$(aws qbusiness create-application --region "$(region)" --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot" --output json) || true
 
-      # Extract the applicationId using jq
-      applicationId=$(echo "$output" | jq -r '.applicationId')
+      # If the application was not created, get the existing applicationId
+      if [ -z "$output" ]; then
+        output=$(aws qbusiness list-applications --region "$(region)" --output json)
+        applicationId=$(echo "$output" | jq -r --arg serviceName "$(serviceName)" '.applications[] | select(.displayName == $serviceName) | .applicationId')
+      else
+        applicationId=$(echo "$output" | jq -r '.applicationId')
+      fi
 
       # Set the pipeline variable
       echo "##vso[task.setvariable variable=application_Id;isOutput=true]$applicationId"
@@ -21,6 +48,7 @@ steps:
       echo "applicationId: $applicationId"
   name: createApplication
 
+  
 - task: AWSShellScript@1
   displayName: 'Create Web Experience'
   inputs:
