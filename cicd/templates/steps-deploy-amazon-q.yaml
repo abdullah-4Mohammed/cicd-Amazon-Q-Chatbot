@@ -56,7 +56,7 @@ steps:
     regionName: '$(region)'
     scriptType: 'inline'
     inlineScript: |
-      set -euo pipefail
+      set -euxo pipefail
 
       # Check if the web experience already exists
       existingWebExperienceOutput=$(aws qbusiness list-web-experiences --region "$(region)" --application-id "$(createApplication.application_Id)" --output json)
