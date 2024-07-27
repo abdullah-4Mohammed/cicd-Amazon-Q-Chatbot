@@ -28,7 +28,7 @@ steps:
     regionName: '$(region)'
     scriptType: 'inline'
     inlineScript: |
-      set -euo pipefail
+      set -euxo pipefail
 
       # Try to create the application
       output=$(aws qbusiness create-application --region "$(region)" --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot" --output json) || true
@@ -48,7 +48,7 @@ steps:
       echo "applicationId: $applicationId"
   name: createApplication
 
-  
+
 - task: AWSShellScript@1
   displayName: 'Create Web Experience'
   inputs:
@@ -59,7 +59,7 @@ steps:
       set -euxo pipefail
 
       # Run the AWS CLI command to create a web experience
-      webExperienceOutput=$(aws qbusiness create-web-experience --region "$(region)" --application-id "$(createApplication.application_Id)" --output json)
+      webExperienceOutput=$(aws qbusiness create-web-experience --region "$(region)" --application-id "$(createApplication.application_Id)" --role-arn "$(web-experience-roleARN)" --output json)
 
       # Extract the webExperienceId using jq
       webExperienceId=$(echo "$webExperienceOutput" | jq -r '.webExperienceId')
