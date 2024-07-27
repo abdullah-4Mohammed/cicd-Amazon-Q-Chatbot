@@ -62,14 +62,12 @@ steps:
       existingWebExperienceOutput=$(aws qbusiness list-web-experiences --region "$(region)" --application-id "$(createApplication.application_Id)" --output json)
       existingWebExperienceId=$(echo "$existingWebExperienceOutput" | jq -r --arg serviceName "$(serviceName)" '.webExperiences[] | select(.displayName == $serviceName) | .webExperienceId')
 
-      if [ -n "$existingWebExperienceId" ]; then
-        # If the web experience already exists, print a message and continue
-        echo "Web experience already exists with ID: $existingWebExperienceId"
-        webExperienceId=$existingWebExperienceId
-      else
-        # If the web experience does not exist, create it
-        webExperienceOutput=$(aws qbusiness create-web-experience --region "$(region)" --application-id "$(createApplication.application_Id)" --role-arn "$(web-experience-roleARN)" --output json)
+      # If no matching web experience was found, create a new one
+      if [ -z "$existingWebExperienceId" ]; then
+        webExperienceOutput=$(aws qbusiness create-web-experience --region "$(region)" --application-id "$(createApplication.application_Id)" --role-arn "$(amazon-q-roleARN)" --output json)
         webExperienceId=$(echo "$webExperienceOutput" | jq -r '.webExperienceId')
+      else
+        webExperienceId="$existingWebExperienceId"
       fi
 
       # Set the pipeline variable
@@ -77,6 +75,7 @@ steps:
 
       # Print the webExperienceId for debugging
       echo "webExperienceId: $webExperienceId"
+
   name: createWebExperience
 
 
