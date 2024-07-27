@@ -1,40 +1,65 @@
 steps:
-- task: Bash@3
+- task: AWSShellScript@1
   displayName: 'Create Application'
   inputs:
-    targetType: 'inline'
-    script: |
+    awsCredentials: '$(awsConnection)'
+    regionName: '$(region)'
+    scriptType: 'inline'
+    inlineScript: |
       set -euxo pipefail
 
-      # Check if AWS CLI is installed
-      if ! command -v aws &> /dev/null
-      then
-          echo "AWS CLI could not be found"
-          exit 1
-      fi
-
-      # Check AWS CLI version
-      aws_version=$(aws --version)
-      echo "AWS CLI version: $(aws_version)"
-
-      # Check if necessary variables are set
-      if [ -z "$(serviceName)" ] || [ -z "$(identityCenterInstanceARN)" ] || [ -z "$(amazon-q-roleARN)" ] || [ -z "$(region)" ]; then
-        echo "One or more required variables are not set"
-        exit 1
-      fi
-
-      # Run the AWS CLI command with the region explicitly specified
+      # Run the AWS CLI command
       output=$(aws qbusiness create-application --region "$(region)" --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot" --output json)
 
       # Extract the applicationId using jq
-      applicationId=$(echo "$output" | jq -r '.applicationId')
-      
+      applicationId=$(echo "$(output)" | jq -r '.applicationId')
+
       # Set the pipeline variable
       echo "##vso[task.setvariable variable=application_Id;isOutput=true]$(applicationId)"
-      
+
       # Print the applicationId for debugging
       echo "applicationId: $(applicationId)"
-  name: createApplication
+
+      echo "application_Id: $(application_Id)"
+
+
+# steps:
+# - task: Bash@3
+#   displayName: 'Create Application'
+#   inputs:
+#     targetType: 'inline'
+#     script: |
+#       set -euxo pipefail
+
+#       # Check if AWS CLI is installed
+#       if ! command -v aws &> /dev/null
+#       then
+#           echo "AWS CLI could not be found"
+#           exit 1
+#       fi
+
+#       # Check AWS CLI version
+#       aws_version=$(aws --version)
+#       echo "AWS CLI version: $(aws_version)"
+
+#       # Check if necessary variables are set
+#       if [ -z "$(serviceName)" ] || [ -z "$(identityCenterInstanceARN)" ] || [ -z "$(amazon-q-roleARN)" ] || [ -z "$(region)" ]; then
+#         echo "One or more required variables are not set"
+#         exit 1
+#       fi
+
+#       # Run the AWS CLI command with the region explicitly specified
+#       output=$(aws qbusiness create-application --region "$(region)" --display-name "$(serviceName)" --identity-center-instance-arn "$(identityCenterInstanceARN)" --role-arn "$(amazon-q-roleARN)" --description "Amazon Q Chatbot" --output json)
+
+#       # Extract the applicationId using jq
+#       applicationId=$(echo "$output" | jq -r '.applicationId')
+      
+#       # Set the pipeline variable
+#       echo "##vso[task.setvariable variable=application_Id;isOutput=true]$(applicationId)"
+      
+#       # Print the applicationId for debugging
+#       echo "applicationId: $(applicationId)"
+#   name: createApplication
 
 
 
