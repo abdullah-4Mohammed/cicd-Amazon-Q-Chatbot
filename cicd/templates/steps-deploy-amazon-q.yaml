@@ -64,7 +64,7 @@ steps:
 
       # If no matching web experience was found, create a new one
       if [ -z "$existingWebExperienceId" ]; then
-        webExperienceOutput=$(aws qbusiness create-web-experience --region "$(region)" --application-id "$(createApplication.application_Id)" --role-arn "$(amazon-q-roleARN)" --output json)
+        webExperienceOutput=$(aws qbusiness create-web-experience --region "$(region)" --application-id "$(createApplication.application_Id)" --role-arn "$(web-experience-roleARN)" --output json)
         webExperienceId=$(echo "$webExperienceOutput" | jq -r '.webExperienceId')
       else
         webExperienceId="$existingWebExperienceId"
