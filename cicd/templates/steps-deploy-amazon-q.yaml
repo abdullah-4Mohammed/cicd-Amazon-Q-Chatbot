@@ -55,7 +55,7 @@ steps:
       existingWebExperienceId=$(echo "$existingWebExperienceOutput" | jq -r '.webExperiences[0].webExperienceId')
 
       # If no matching web experience was found, create a new one
-      if [ -z "$existingWebExperienceId" ]; then
+      if [ -z "$existingWebExperienceId" ] || [ "$existingWebExperienceId" == "null" ]; then
         webExperienceOutput=$(
           aws qbusiness create-web-experience \
             --region "$(region)" \
