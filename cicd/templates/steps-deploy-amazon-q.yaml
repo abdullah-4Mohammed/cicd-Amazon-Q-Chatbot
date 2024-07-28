@@ -37,7 +37,6 @@ steps:
       echo "applicationId: $applicationId"
   name: createApplication
 
-
 - task: AWSShellScript@1
   displayName: 'Create Web Experience'
   inputs:
