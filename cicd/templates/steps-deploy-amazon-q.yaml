@@ -37,7 +37,7 @@ steps:
       set -euxo pipefail
 
       # Check if the web experience already exists
-      existingWebExperienceOutput=$(aws qbusiness list-web-experiences --region "$(region)" --application-id "$(createApplication.application_Id)" --output json)
+      existingWebExperienceOutput=$(aws qbusiness list-web-experiences --application-id "$(createApplication.application_Id)" --output json)
       existingWebExperienceId=$(echo "$existingWebExperienceOutput" | jq -r --arg serviceName "$(serviceName)" '.webExperiences[] | select(.displayName == $serviceName) | .webExperienceId')
 
       # If no matching web experience was found, create a new one
