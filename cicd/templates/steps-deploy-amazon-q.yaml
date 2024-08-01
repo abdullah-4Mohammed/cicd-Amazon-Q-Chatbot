@@ -95,7 +95,12 @@ steps:
           --application-id "$(createApplication.application_Id)" \
           --output json
       )
-      existingIndexId=$(echo "$existingIndexOutput" | jq -r --arg indexName "$(indexName)" '.indexes[] | select(.name == $indexName) | .indexId')
+      indices=$(echo "$existingIndexOutput" | jq '.indices')
+      if [ "$indices" != "[]" ]; then
+        existingIndexId=$(echo "$existingIndexOutput" | jq -r --arg indexName "$(indexName)" '.indices[] | select(.name == $indexName) | .indexId')
+      else
+        existingIndexId=""
+      fi
 
       # If no matching index was found, create a new one
       if [ -z "$existingIndexId" ] || [ "$existingIndexId" == "null" ]; then
