@@ -1,10 +1,10 @@
 variables:
+  serviceName: "survey-assistant"
   region: 'us-east-1'
+  regionShortName: "use1"
   awsConnection: "AzToAWS"
   backendBucketName: "backend-tfstate"
-  backendBucket: "survey-assistant-backend-tfstate-use1"
-  regionShortName: "use1"
-  serviceName: "survey-assistant"
+  backendBucket: "$(serviceName)-$(backendBucketName)-$(regionShortName)"
   identityCenterInstanceARN: "arn:aws:sso:::instance/ssoins-72231ea94955ab62"
   amazon-q-roleARN: "arn:aws:iam::975050226089:role/aws-service-role/qbusiness.amazonaws.com/AWSServiceRoleForQBusiness"
   amazon-q-applicationId: ""
@@ -12,3 +12,7 @@ variables:
   web-title: "Survey Assistant"
   web-subtitle: "Researcher Survey Assistant"
   web-welcome_message: "I am your AI survey assistant. How I can help you today?"
+  
+  datasourceBucketName: "$(serviceName)-datasourceBucket-$(regionShortName)"
+  dataSourceRoleARN: "arn:aws:iam::975050226089:role/service-role/QBusiness-DataSource-199kf"
+  dataSourceName: "$(serviceName)-dataSource-$(regionShortName)"

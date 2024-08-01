@@ -9,16 +9,42 @@ trigger:
     - cicd/templates/steps-deploy-amazon-q.yaml
     - cicd/amazon-q-pipeline.yaml
 
+    - cicd/infra-pipeline.yaml
+    - cicd/templates/steps-deploy-tf.yaml
+    - deploy
+    - src
+
 pool:
   vmImage: 'ubuntu-latest'
 
 resources:
 - repo: self
 
+parameters:
+- name: environments
+  type: object
+  default: ['nonprod']
+# - name: namespaces
+#   type: object
+#   default: ['dev']
+
 
 variables:
  - template: variables/vars-global.yaml
 stages:
+
+- ${{ each env in parameters.environments }}:
+  - stage: Deploy_${{ env }}
+    displayName: Deploy ${{ env }}
+    jobs:
+    - job: Deploy_Terraform
+      displayName: Deploy terraform infrastructure
+      #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+      variables:
+      - template: variables/vars-${{ env }}.yaml
+      steps:
+      - template: templates/steps-deploy-tf.yaml
+
   - stage: Deploy_amazon_q
     displayName: Deploy Amazon Q
     jobs:
