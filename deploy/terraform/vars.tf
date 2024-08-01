@@ -18,6 +18,10 @@ variable "region" {
   type = string
 }
 
+variable "datasourceBucketName" { 
+  type = string
+}
+
 locals {
   resourceName = "Az-aws-${var.serviceName}-${var.environment}-${var.regionShortName}"
   key = "tf/${var.environment}.tfstate"

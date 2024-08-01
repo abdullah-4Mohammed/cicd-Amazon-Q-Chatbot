@@ -1,6 +1,6 @@
 // Create the S3 bucket 
 resource "aws_s3_bucket" "amazon-q-ds-bucket" {
-  bucket = "${var.serviceName}-datasource-bucket"
+  bucket = "${var.datasourceBucketName}"
   force_destroy = true
 
 }
