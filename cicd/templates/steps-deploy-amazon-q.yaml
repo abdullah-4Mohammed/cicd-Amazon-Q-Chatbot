@@ -79,6 +79,44 @@ steps:
   name: createWebExperience
 
 
+
+- task: AWSShellScript@1
+  displayName: 'Create Index'
+  inputs:
+    awsCredentials: '$(awsConnection)'
+    regionName: '$(region)'
+    scriptType: 'inline'
+    inlineScript: |
+      set -euxo pipefail
+
+      # Check if the index already exists
+      existingIndexOutput=$(
+        aws qbusiness list-indexes \
+          --application-id "$(createApplication.application_Id)" \
+          --output json
+      )
+      existingIndexId=$(echo "$existingIndexOutput" | jq -r --arg indexName "$(indexName) '.indexes[] | select(.name == $indexName) | .indexId')
+
+      # If no matching index was found, create a new one
+      if [ -z "$existingIndexId" ] || [ "$existingIndexId" == "null" ]; then
+        indexOutput=$(
+          aws qbusiness create-index \
+            --application-id "$(createApplication.application_Id)" \
+            --display-name "$(indexName)" \
+            --type ENTERPRISE \
+            --output json
+        )
+        indexId=$(echo "$indexOutput" | jq -r '.indexId')
+      else
+        indexId="$existingIndexId"
+      fi
+
+      echo "Index ID: $indexId"
+      echo "##vso[task.setvariable variable=index_Id;isOutput=true]$indexId"
+  name: createIndex
+
+
+
 - task: AWSShellScript@1
   displayName: 'Create Data Source'
   inputs:
@@ -98,6 +136,7 @@ steps:
       existingDataSourceOutput=$(
         aws qbusiness list-data-sources \
           --application-id "$(createApplication.application_Id)" \
+          --index-id "$(createIndex.index_Id) \
           --output json
       )
       existingDataSourceId=$(echo "$existingDataSourceOutput" | jq -r --arg dataSourceName "$(dataSourceName) '.dataSources[] | select(.name == $dataSourceName) | .dataSourceId')
@@ -108,6 +147,7 @@ steps:
           aws qbusiness create-data-source \
             --region "$(region)" \
             --application-id "$(createApplication.application_Id)" \
+            --index-id "$(createIndex.index_Id)" \
             --name "$(dataSourceName)" \
             --type "S3" \
             --s3-parameters "$s3Config" \
