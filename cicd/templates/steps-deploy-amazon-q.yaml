@@ -81,11 +81,11 @@ steps:
 
 
 
-- task: AmazonWebServices.aws-vsts-tools.AWSShellScript.AWSShellScript@1
+- task: AWSShellScript@1
   displayName: 'Create Index'
   inputs:
     awsCredentials: 'aws-credentials'
-    regionName: 'us-east-1'
+    regionName: '$(region)'
     scriptType: 'inline'
     inlineScript: |
       # Check if the index already exists
