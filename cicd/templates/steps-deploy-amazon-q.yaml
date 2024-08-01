@@ -84,7 +84,7 @@ steps:
 - task: AWSShellScript@1
   displayName: 'Create Index'
   inputs:
-    awsCredentials: 'aws-credentials'
+    awsCredentials: '$(awsConnection)'
     regionName: '$(region)'
     scriptType: 'inline'
     inlineScript: |
