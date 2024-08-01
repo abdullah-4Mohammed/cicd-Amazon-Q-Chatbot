@@ -91,7 +91,7 @@ steps:
 
       # Check if the index already exists
       existingIndexOutput=$(
-        aws qbusiness list-indexes \
+        aws qbusiness list-indices \
           --application-id "$(createApplication.application_Id)" \
           --output json
       )
