@@ -13,7 +13,7 @@ variables:
   web-subtitle: "Researcher Survey Assistant"
   web-welcome_message: "I am your AI survey assistant. How I can help you today?"
   
-  datasourceBucketName: "$(serviceName)-datasourceBucket-$(regionShortName)"
+  datasourceBucketName: "$(serviceName)-datasource-bucket-$(regionShortName)"
   dataSourceRoleARN: "arn:aws:iam::975050226089:role/service-role/QBusiness-DataSource-199kf"
   dataSourceName: "$(serviceName)-dataSource-$(regionShortName)"
 
