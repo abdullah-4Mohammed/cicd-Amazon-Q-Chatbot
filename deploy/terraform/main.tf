@@ -1,6 +1,11 @@
 // Create the S3 bucket 
+output "bucket_name" {
+  description = "The name of the S3 bucket"
+  value       = var.datasourceBucketName
+}
+
 resource "aws_s3_bucket" "amazon-q-ds-bucket" {
-  bucket = "${var.datasourceBucketName}"
+  bucket = var.datasourceBucketName
   force_destroy = true
 
 }
