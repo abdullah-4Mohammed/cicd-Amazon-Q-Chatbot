@@ -135,8 +135,8 @@ steps:
               "bucket": "$(datasourceBucketName)",
               "roleArn": "$(dataSourceRoleARN)"
             }
-        EOF
-        )
+      EOF
+      )
       
 
 
