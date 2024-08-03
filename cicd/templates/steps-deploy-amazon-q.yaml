@@ -129,13 +129,12 @@ steps:
       set -euxo pipefail
 
       # S3 Configuration for the data source
-      s3Config=$(cat << 'EOF'
+      read -r -d '' s3Config << 'EOF' || true
       {
-        "bucket": "survey-assistant-datasource-bucket-use1",
-        "roleArn": "arn:aws:iam::975050226089:role/service-role/QBusiness-DataSource-199kf"
+        "bucket": "$(datasourceBucketName)",
+        "roleArn": "$(dataSourceRoleARN)"
       }
       EOF
-      )
 
       # Check if the data source already exists
       existingDataSourceOutput=$(

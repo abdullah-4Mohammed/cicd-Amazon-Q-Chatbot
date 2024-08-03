@@ -18,3 +18,5 @@ variables:
   dataSourceName: "$(serviceName)-dataSource-$(regionShortName)"
 
   indexName: "$(serviceName)-index-$(regionShortName)"
+
+  
