@@ -129,12 +129,13 @@ steps:
       set -euxo pipefail
 
       # S3 Configuration for the data source
-      read -r -d '' s3Config << 'EOF' || true
-      {
-        "bucket": "$(datasourceBucketName)",
-        "roleArn": "$(dataSourceRoleARN)"
-      }
-      EOF
+      s3Config=$(cat <<EOF
+{
+  "bucket": "$(datasourceBucketName)",
+  "roleArn": "$(dataSourceRoleARN)"
+}
+EOF
+      )
 
       # Check if the data source already exists
       existingDataSourceOutput=$(
