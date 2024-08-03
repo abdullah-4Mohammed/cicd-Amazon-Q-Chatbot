@@ -130,7 +130,7 @@ steps:
 
       # S3 Configuration for the data source
 
-      s4Config='$(s3Config)'
+      s4Config="${s3Config}"
 
 
       # Check if the data source already exists
