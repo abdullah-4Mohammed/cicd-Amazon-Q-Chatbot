@@ -19,8 +19,8 @@ variables:
 
   indexName: "$(serviceName)-index-$(regionShortName)"
 
-  s3Config: |
-    {
-      "bucket": "$(datasourceBucketName)",
-      "roleArn": "$(dataSourceRoleARN)"
-    }
+  # s3Config: |
+  #   {
+  #     "bucket": "$(datasourceBucketName)",
+  #     "roleArn": "$(dataSourceRoleARN)"
+  #   }
