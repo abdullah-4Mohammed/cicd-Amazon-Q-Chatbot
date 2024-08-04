@@ -161,11 +161,10 @@ steps:
       if [ -z "$existingDataSourceId" ] || [ "$existingDataSourceId" == "null" ]; then
         dataSourceOutput=$(
           aws qbusiness create-data-source \
-            --region "$(region)" \
             --application-id "$(createApplication.application_Id)" \
             --index-id "$(createIndex.index_Id)" \
             --display-name "$(dataSourceName)" \
-            --configuration $s3Config \
+            --configuration '$s3Config' \
             --role-arn "$(dataSourceRoleARN)" \
             --output json
         )
