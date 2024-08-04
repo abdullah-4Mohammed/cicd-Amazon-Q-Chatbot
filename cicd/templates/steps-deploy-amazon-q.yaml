@@ -131,10 +131,16 @@ steps:
       # S3 Configuration for the data source
 
       s3Config=$(cat <<EOF
-        {
-          "bucket": "$(datasourceBucketName)",
-          "roleArn": "$(dataSourceRoleARN)"
-        }
+      {
+        "connectionConfiguration": {
+          "repositoryEndpointMetadata": {
+            "BucketName": "$(datasourceBucketName)"
+          }
+        },
+        "syncMode": "FULL_CRAWL",
+        "type": "S3",
+        "version": "1.0.0"
+      }
       EOF
       )
       
