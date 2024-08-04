@@ -146,7 +146,7 @@ steps:
       existingDataSourceOutput=$(
         aws qbusiness list-data-sources \
           --application-id "$(createApplication.application_Id)" \
-          --index-id "$(createIndex.index_Id) \
+          --index-id "$(createIndex.index_Id)" \
           --output json
       )
       existingDataSourceId=$(echo "$existingDataSourceOutput" | jq -r --arg dataSourceName "$(dataSourceName) '.dataSources[] | select(.name == $dataSourceName) | .dataSourceId')
