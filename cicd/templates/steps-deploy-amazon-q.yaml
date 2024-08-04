@@ -165,7 +165,7 @@ steps:
             --application-id "$(createApplication.application_Id)" \
             --index-id "$(createIndex.index_Id)" \
             --display-name "$(dataSourceName)" \
-            --configuration "$s3Config" \
+            --configuration $s3Config \
             --role-arn "$(dataSourceRoleARN)" \
             --output json
         )
