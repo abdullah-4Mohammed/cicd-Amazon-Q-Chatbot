@@ -158,9 +158,8 @@ steps:
             --region "$(region)" \
             --application-id "$(createApplication.application_Id)" \
             --index-id "$(createIndex.index_Id)" \
-            --name "$(dataSourceName)" \
-            --type "S3" \
-            --s3-parameters "$s3Config" \
+            --display-name "$(dataSourceName)" \
+            --configuration "$s3Config" \
             --role-arn "$(dataSourceRoleARN)" \
             --output json
         )
