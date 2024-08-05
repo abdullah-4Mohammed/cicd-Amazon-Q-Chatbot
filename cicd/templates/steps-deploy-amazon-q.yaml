@@ -155,7 +155,7 @@ steps:
           --index-id "$(createIndex.index_Id)" \
           --output json
       )
-      existingDataSourceId=$(echo "$existingDataSourceOutput" | jq -r --arg dataSourceName "$(dataSourceName) '.dataSources[] | select(.name == $dataSourceName) | .dataSourceId')
+      existingDataSourceId=$(echo "$existingDataSourceOutput" | jq -r --arg dataSourceName "$(dataSourceName)" '.dataSources[] | select(.name == $dataSourceName) | .dataSourceId')
 
       # If no matching data source was found, create a new one
       if [ -z "$existingDataSourceId" ] || [ "$existingDataSourceId" == "null" ]; then
@@ -164,7 +164,7 @@ steps:
             --application-id "$(createApplication.application_Id)" \
             --index-id "$(createIndex.index_Id)" \
             --display-name "$(dataSourceName)" \
-            --configuration '$s3Config' \
+            --configuration "$s3Config" \
             --role-arn "$(dataSourceRoleARN)" \
             --output json
         )
