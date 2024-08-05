@@ -171,8 +171,6 @@ steps:
       
       echo "$s3Config"
 
-  
-     
       # Check if the data source already exists
       existingDataSourceOutput=$(
         aws qbusiness list-data-sources \
@@ -180,7 +178,10 @@ steps:
           --index-id "$(createIndex.index_Id)" \
           --output json
       )
+      echo "existingDataSourceOutput: $existingDataSourceOutput"
+
       existingDataSourceId=$(echo "$existingDataSourceOutput" | jq -r --arg dataSourceName "$(dataSourceName)" '.dataSources[] | select(.name == $dataSourceName) | .dataSourceId')
+      echo "existingDataSourceId: $existingDataSourceId"
 
       # If no matching data source was found, create a new one
       if [ -z "$existingDataSourceId" ] || [ "$existingDataSourceId" == "null" ]; then
