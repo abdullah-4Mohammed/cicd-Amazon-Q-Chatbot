@@ -180,7 +180,7 @@ steps:
       )
       echo "existingDataSourceOutput: $existingDataSourceOutput"
 
-      existingDataSourceId=$(echo "$existingDataSourceOutput" | jq -r --arg dataSourceName "$(dataSourceName)" '.dataSources[] | select(.name == $dataSourceName) | .dataSourceId')
+      existingDataSourceId=$(echo "$existingDataSourceOutput" | jq -r --arg dataSourceName "$(dataSourceName)" '.dataSources[] | select(.displayName == $dataSourceName) | .dataSourceId')
       echo "existingDataSourceId: $existingDataSourceId"
 
       # If no matching data source was found, create a new one
