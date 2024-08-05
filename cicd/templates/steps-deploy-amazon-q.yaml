@@ -134,7 +134,8 @@ steps:
       {
         "connectionConfiguration": {
           "repositoryEndpointMetadata": {
-            "BucketName": "$(datasourceBucketName)"
+            "BucketName": "$(datasourceBucketName)",
+            "AccessRoleArn": "$(accessRoleArn)"
           }
         },
         "syncMode": "FULL_CRAWL",
