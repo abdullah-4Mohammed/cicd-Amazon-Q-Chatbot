@@ -234,13 +234,13 @@ steps:
           --output json
       )
       existingRetrieverId=$(echo "$existingRetrieverOutput" | jq -r --arg retrieverName "$(retrieverName)" '.retrievers[] | select(.displayName == $retrieverName) | .retrieverId')
-
+      
       # If no matching retriever was found, create a new one
       if [ -z "$existingRetrieverId" ] || [ "$existingRetrieverId" == "null" ]; then
         retrieverOutput=$(
           aws qbusiness create-retriever \
             --application-id "$(createApplication.application_Id)" \
-            --type "(retrieverType) \
+            --type "$(retrieverType)" \
             --display-name "$(retrieverName)" \
             --configuration "$retrieverConfig" \
             --role-arn "$(retrieverRoleARN)" \
