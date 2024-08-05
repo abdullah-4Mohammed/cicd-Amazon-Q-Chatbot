@@ -134,9 +134,33 @@ steps:
       {
         "connectionConfiguration": {
           "repositoryEndpointMetadata": {
-            "BucketName": "$(datasourceBucketName)",
-            "AccessRoleArn": "$(accessRoleArn)"
+            "BucketName": "$(datasourceBucketName)"
           }
+        },
+        "repositoryConfigurations": {
+          "document": {
+            "fieldMappings": [
+              {
+                "indexFieldName": "documentTitle",
+                "indexFieldType": "STRING",
+                "dataSourceFieldName": "Title"
+              },
+              {
+                "indexFieldName": "documentContent",
+                "indexFieldType": "STRING",
+                "dataSourceFieldName": "Content"
+              }
+            ]
+          }
+        },
+        "additionalProperties": {
+          "inclusionPatterns": ["*.docx"],
+          "exclusionPatterns": [],
+          "inclusionPrefixes": [],
+          "exclusionPrefixes": [],
+          "aclConfigurationFilePath": "",
+          "metadataFilesPrefix": "",
+          "maxFileSizeInMegaBytes": "50"
         },
         "syncMode": "FULL_CRAWL",
         "type": "S3",
