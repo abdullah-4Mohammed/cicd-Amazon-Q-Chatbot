@@ -35,7 +35,7 @@ stages:
 
 - ${{ each env in parameters.environments }}:
   - stage: Deploy_${{ env }}
-    displayName: Deploy ${{ env }}
+    displayName: Deploy ${{ env }} Storage Terraform
     jobs:
     - job: Deploy_Terraform
       displayName: Deploy terraform infrastructure
@@ -52,4 +52,10 @@ stages:
         displayName: Deploy Amazon Q
         # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))     
         steps:
-        - template: templates/steps-deploy-amazon-q.yaml
+        - template: templates/steps-deploy-amazonq-application.yaml
+        - template: templates/steps-deploy-index.yaml
+        - template: templates/steps-deploy-retriever.yaml
+        - template: templates/steps-deploy-datasource.yaml
+        - template: templates/steps-deploy-web-experience.yaml
+        - template: templates/steps-deploy-update-web-experience.yaml
+        

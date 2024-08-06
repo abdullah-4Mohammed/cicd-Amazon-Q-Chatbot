@@ -1,0 +1,41 @@
+steps:
+- task: AWSShellScript@1
+  displayName: 'Create Web Experience'
+  inputs:
+    awsCredentials: '$(awsConnection)'
+    regionName: '$(region)'
+    scriptType: 'inline'
+    inlineScript: |
+      set -euxo pipefail
+
+      # Check if the web experience already exists
+      existingWebExperienceOutput=$(
+        aws qbusiness list-web-experiences \
+          --application-id "$(createApplication.application_Id)" \
+          --output json
+      )
+      existingWebExperienceId=$(echo "$existingWebExperienceOutput" | jq -r '.webExperiences[0].webExperienceId')
+
+      # If no matching web experience was found, create a new one
+      if [ -z "$existingWebExperienceId" ] || [ "$existingWebExperienceId" == "null" ]; then
+        webExperienceOutput=$(
+          aws qbusiness create-web-experience \
+            --region "$(region)" \
+            --application-id "$(createApplication.application_Id)" \
+            --role-arn "$(web-experience-roleARN)" \
+            --title "$(web-title)" \
+            --subtitle "$(web-subtitle)" \
+            --welcome-message "$(web-welcome_message)" \
+            --output json
+        )
+        webExperienceId=$(echo "$webExperienceOutput" | jq -r '.webExperienceId')
+      else
+        webExperienceId="$existingWebExperienceId"
+      fi
+
+      # Set the pipeline variable
+      echo "##vso[task.setvariable variable=webExperience_Id;isOutput=true]$webExperienceId"
+
+      # Print the webExperienceId for debugging
+      echo "webExperienceId: $webExperienceId"
+  name: createWebExperience

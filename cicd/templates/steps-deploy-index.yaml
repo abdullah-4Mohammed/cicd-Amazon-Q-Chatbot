@@ -1,0 +1,38 @@
+steps:
+- task: AWSShellScript@1
+  displayName: 'Create Index'
+  inputs:
+    awsCredentials: '$(awsConnection)'
+    regionName: '$(region)'
+    scriptType: 'inline'
+    inlineScript: |
+      # Check if the index already exists
+      existingIndexOutput=$(
+        aws qbusiness list-indices \
+          --application-id "$(createApplication.application_Id)" \
+          --output json
+      )
+      indices=$(echo "$existingIndexOutput" | jq '.indices')
+      if [ "$indices" != "[]" ]; then
+        existingIndexId=$(echo "$existingIndexOutput" | jq -r --arg indexName "$(indexName)" '.indices[] | select(.displayName == $indexName) | .indexId')
+      else
+        existingIndexId=""
+      fi
+
+      # If no matching index was found, create a new one
+      if [ -z "$existingIndexId" ] || [ "$existingIndexId" == "null" ]; then
+        indexOutput=$(
+          aws qbusiness create-index \
+            --application-id "$(createApplication.application_Id)" \
+            --display-name "$(indexName)" \
+            --type ENTERPRISE \
+            --output json
+        )
+        indexId=$(echo "$indexOutput" | jq -r '.indexId')
+      else
+        indexId="$existingIndexId"
+      fi
+
+      echo "Index ID: $indexId"
+      echo "##vso[task.setvariable variable=index_Id;isOutput=true]$indexId"
+  name: createIndex

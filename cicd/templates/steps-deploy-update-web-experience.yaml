@@ -1,0 +1,19 @@
+steps:
+- task: AWSShellScript@1
+  displayName: 'Update Web Experience'
+  inputs:
+    awsCredentials: '$(awsConnection)'
+    regionName: '$(region)'
+    scriptType: 'inline'
+    inlineScript: |
+      set -euxo pipefail
+
+      # Update the web experience
+      aws qbusiness update-web-experience \
+        --application-id "$(createApplication.application_Id)" \
+        --web-experience-id "$(createWebExperience.webExperience_Id)" \
+        --title "$(web-title)" \
+        --subtitle "$(web-subtitle)" \
+        --welcome-message "$(web-welcome_message)" \
+        --output json
+  name: updateWebExperiencece
