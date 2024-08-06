@@ -6,11 +6,10 @@ trigger:
     - main
   paths:
     include:
-    - cicd/templates/steps-deploy-amazon-q.yaml
+    - cicd/templates
     - cicd/amazon-q-pipeline.yaml
 
     - cicd/infra-pipeline.yaml
-    - cicd/templates/steps-deploy-tf.yaml
     - deploy
     - src
 
