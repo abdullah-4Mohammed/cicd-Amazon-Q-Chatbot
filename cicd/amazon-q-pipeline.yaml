@@ -8,7 +8,6 @@ trigger:
     include:
     - cicd/templates
     - cicd/amazon-q-pipeline.yaml
-
     - cicd/infra-pipeline.yaml
     - deploy
     - src
