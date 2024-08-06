@@ -2,6 +2,11 @@
 # This name is used to refer to this resource within your Terraform configuration. 
 # It doesn't have to match the name of the S3 bucket in AWS.
 
+resource "aws_s3_bucket" "amazon-q-ds-bucket" {
+  bucket = var.datasourceBucketName
+  force_destroy = true
+}
+
 data "archive_file" "data" {
   type        = "zip"
   source_dir  = "../../src/data"
