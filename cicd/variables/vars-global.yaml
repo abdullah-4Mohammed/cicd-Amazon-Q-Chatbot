@@ -9,9 +9,9 @@ variables:
   amazon-q-roleARN: "arn:aws:iam::975050226089:role/aws-service-role/qbusiness.amazonaws.com/AWSServiceRoleForQBusiness"
   amazon-q-applicationId: ""
   web-experience-roleARN: "arn:aws:iam::975050226089:role/service-role/QBusiness-WebExperience-lrigl"
-  web-title: "Survey Assistant up"
-  web-subtitle: "Researcher Survey Assistant up"
-  web-welcome_message: "I am your AI survey assistant. How I can help you today? up"
+  web-title: "Survey Assistant"
+  web-subtitle: "Researcher Survey Assistant"
+  web-welcome_message: "I am your AI survey assistant. How I can help you today?"
   
   datasourceBucketName: "$(serviceName)-datasource-bucket-$(regionShortName)"
   dataSourceRoleARN: "arn:aws:iam::975050226089:role/service-role/QBusiness-DataSource-199kf"
