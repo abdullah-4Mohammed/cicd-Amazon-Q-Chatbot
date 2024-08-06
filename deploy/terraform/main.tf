@@ -1,23 +1,11 @@
-// Create the S3 bucket 
-output "bucket_name" {
-  description = "The name of the S3 bucket"
-  value       = var.datasourceBucketName
-}
-
-resource "aws_s3_bucket" "amazon-q-ds-bucket" {
+resource "aws_s3_bucket" "amazon-q-ds-bucket" {    
   bucket = var.datasourceBucketName
   force_destroy = true
-
 }
-#"amazon-q-ds-bucket" is the local name of the resource within your Terraform configuration. 
-#This name is used to refer to this resource within your Terraform configuration. 
-#It doesn't have to match the name of the S3 bucket in AWS.
+# "amazon-q-ds-bucket" is the local name of the resource within your Terraform configuration. 
+# This name is used to refer to this resource within your Terraform configuration. 
+# It doesn't have to match the name of the S3 bucket in AWS.
 
-# resource "aws_s3_bucket_acl" "amazon-q-ds-bucket" {
-#   bucket = aws_s3_bucket.amazon-q-ds-bucket.id
-#   acl    = "private"
-#   depends_on = [ aws_s3_bucket.amazon-q-ds-bucket ]
-# }
 
 // Use a local-exec provisioner to upload the files
 resource "null_resource" "upload_files" {
