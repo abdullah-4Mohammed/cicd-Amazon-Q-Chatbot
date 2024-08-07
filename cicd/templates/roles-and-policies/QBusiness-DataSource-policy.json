@@ -1,0 +1,58 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowsAmazonQToGetObjectfromS3",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::*/*"
+            ],
+            "Effect": "Allow",
+            "Condition": {
+                "StringEquals": {
+                    "aws:ResourceAccount": "*"
+                }
+            }
+        },
+        {
+            "Sid": "AllowsAmazonQToListS3Buckets",
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::*"
+            ],
+            "Effect": "Allow",
+            "Condition": {
+                "StringEquals": {
+                    "aws:ResourceAccount": "*"
+                }
+            }
+        },
+        {
+            "Sid": "AllowsAmazonQToIngestDocuments",
+            "Effect": "Allow",
+            "Action": [
+                "qbusiness:BatchPutDocument",
+                "qbusiness:BatchDeleteDocument"
+            ],
+            "Resource": "arn:aws:qbusiness:*:*:application/*"
+        },
+        {
+            "Sid": "AllowsAmazonQToCallPrincipalMappingAPIs",
+            "Effect": "Allow",
+            "Action": [
+                "qbusiness:PutGroup",
+                "qbusiness:CreateUser",
+                "qbusiness:DeleteGroup",
+                "qbusiness:UpdateUser",
+                "qbusiness:ListGroups"
+            ],
+            "Resource": [
+                "arn:aws:qbusiness:*:*:application/*"
+            ]
+        }
+    ]
+}

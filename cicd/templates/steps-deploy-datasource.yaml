@@ -111,7 +111,7 @@ steps:
           }
         },
         "additionalProperties": {
-          "inclusionPatterns": ["*.docx"],
+          "inclusionPatterns": [],
           "exclusionPatterns": [],
           "inclusionPrefixes": [],
           "exclusionPrefixes": [],
