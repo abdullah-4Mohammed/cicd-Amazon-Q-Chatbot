@@ -41,4 +41,48 @@ steps:
 
       # Print the role ARN for debugging
       echo "Role ARN: $role_arn"
-  name: create_Amazonq_IAMRole
+  name: createAmazonqRole
+
+- task: AWSShellScript@1
+  displayName: 'Create Role Web Experience'
+  inputs:
+    awsCredentials: '$(awsConnection)'
+    regionName: '$(region)'
+    scriptType: 'inline'
+    inlineScript: |
+      set -euxo pipefail
+
+      # Define variables
+      trust_policy_file="cicd/templates/roles-and-policies/amazonq-trust-relation-policy.json"
+      permission_policy_file="cicd/templates/roles-and-policies/QBusiness-WebExperience-policy.json"
+
+      # Check if the role exists
+      role_exists=$(aws iam get-role --role-name "$(WebExperiencRoleName)" --query 'Role.RoleName' --output text || echo "RoleNotFound")
+
+      if [ "$role_exists" == "RoleNotFound" ]; then
+        # Create the IAM Role
+        aws iam create-role \
+          --role-name "$(WebExperiencRoleName)" \
+          --assume-role-policy-document file://$trust_policy_file
+
+        # Attach the permission policies
+        aws iam put-role-policy \
+          --role-name "$(WebExperiencRoleName)" \
+          --policy-name "QBusinessWebExperiencePolicy" \
+          --policy-document file://$permission_policy_file
+
+        echo "Role $(WebExperiencRoleName) created and policies attached."
+      else
+        echo "Role $(WebExperiencRoleName) already exists. Skipping creation."
+      fi
+
+      # Get the ARN of the role
+      role_arn=$(aws iam get-role --role-name "$(WebExperiencRoleName)" --query 'Role.Arn' --output text)
+
+      # Set the role ARN as a pipeline variable
+      echo "##vso[task.setvariable variable=qBusinessWebExperienceRoleARN;isOutput=true]$role_arn"
+
+      # Print the role ARN for debugging
+      echo "Role ARN: $role_arn"
+  name: createWebExperienceRole
+
