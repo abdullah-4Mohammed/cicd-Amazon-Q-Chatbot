@@ -1,6 +1,6 @@
 steps:
 - task: AWSShellScript@1
-  displayName: 'Create IAM Role and Attach Policies'
+  displayName: 'Create IAM Role if Not Exists and Attach Policies'
   inputs:
     awsCredentials: '$(awsConnection)'
     regionName: '$(region)'
@@ -10,7 +10,7 @@ steps:
 
       # Define variables
       role_name="AmazonQRole-madedemo"
-      trust_policy_file="cicd\templates\roles-and-policies\amazonq-trust-relation-policy.json"
+      trust_policy_file="cicd/templates/roles-and-policies/amazonq-trust-relation-policy.json"
       permission_policy_file="cicd/templates/roles-and-policies/amazonq-policy.json"
 
       # Check if the role exists
