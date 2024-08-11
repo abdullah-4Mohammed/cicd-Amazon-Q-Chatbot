@@ -41,4 +41,4 @@ steps:
 
       # Print the role ARN for debugging
       echo "Role ARN: $role_arn"
-  name: createIAMRole
+  name: create_Amazonq_IAMRole
