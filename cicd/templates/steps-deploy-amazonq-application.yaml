@@ -22,7 +22,7 @@ steps:
             --region "$(region)" \
             --display-name "$(serviceName)" \
             --identity-center-instance-arn "$(identityCenterInstanceARN)" \
-            --role-arn "$(amazon-q-roleARN)" \
+            --role-arn "$(createAmazonqRole.amazonQRoleARN)" \
             --description "Amazon Q Chatbot" \
             --output json
         )
