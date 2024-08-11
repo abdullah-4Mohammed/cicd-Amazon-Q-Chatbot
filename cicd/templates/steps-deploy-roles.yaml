@@ -1,6 +1,6 @@
 steps:
 - task: AWSShellScript@1
-  displayName: 'Create IAM Role if Not Exists and Attach Policies'
+  displayName: 'Create Role AmazonQ'
   inputs:
     awsCredentials: '$(awsConnection)'
     regionName: '$(region)'
@@ -44,8 +44,13 @@ steps:
   name: createAmazonqRole
 
 
+
+
+
+
+
 - task: AWSShellScript@1
-  displayName: 'Create IAM Role for QBusiness Data Source'
+  displayName: 'Create Role Data Source'
   inputs:
     awsCredentials: '$(awsConnection)'
     regionName: '$(region)'
