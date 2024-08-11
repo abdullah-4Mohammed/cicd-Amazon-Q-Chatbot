@@ -9,32 +9,32 @@ steps:
       set -euxo pipefail
 
       # Define variables
-      role_name="AmazonQRole-madedemo"
+      
       trust_policy_file="cicd/templates/roles-and-policies/amazonq-trust-relation-policy.json"
       permission_policy_file="cicd/templates/roles-and-policies/amazonq-policy.json"
 
       # Check if the role exists
-      role_exists=$(aws iam get-role --role-name "$role_name" --query 'Role.RoleName' --output text || echo "RoleNotFound")
+      role_exists=$(aws iam get-role --role-name "$(amazon-q-roleName)" --query 'Role.RoleName' --output text || echo "RoleNotFound")
 
       if [ "$role_exists" == "RoleNotFound" ]; then
         # Create the IAM Role
         aws iam create-role \
-          --role-name "$role_name" \
+          --role-name "$(amazon-q-roleName)" \
           --assume-role-policy-document file://$trust_policy_file
 
         # Attach the permission policies
         aws iam put-role-policy \
-          --role-name "$role_name" \
+          --role-name "$(amazon-q-roleName)" \
           --policy-name "AmazonQPermissionsPolicy" \
           --policy-document file://$permission_policy_file
 
-        echo "Role $role_name created and policies attached."
+        echo "Role $(amazon-q-roleName) created and policies attached."
       else
-        echo "Role $role_name already exists. Skipping creation."
+        echo "Role $(amazon-q-roleName) already exists. Skipping creation."
       fi
 
       # Get the ARN of the role
-      role_arn=$(aws iam get-role --role-name "$role_name" --query 'Role.Arn' --output text)
+      role_arn=$(aws iam get-role --role-name "$(amazon-q-roleName)" --query 'Role.Arn' --output text)
 
       # Set the role ARN as a pipeline variable
       echo "##vso[task.setvariable variable=amazonQRoleARN;isOutput=true]$role_arn"
