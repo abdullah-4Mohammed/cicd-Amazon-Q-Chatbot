@@ -22,7 +22,7 @@ steps:
           aws qbusiness create-web-experience \
             --region "$(region)" \
             --application-id "$(createApplication.application_Id)" \
-            --role-arn "$(web-experience-roleARN)" \
+            --role-arn "$(createWebExperienceRole.qBusinessWebExperienceRoleARN)" \
             --title "$(web-title)" \
             --subtitle "$(web-subtitle)" \
             --welcome-message "$(web-welcome_message)" \

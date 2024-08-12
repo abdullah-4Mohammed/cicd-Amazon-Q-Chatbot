@@ -71,7 +71,7 @@
 #             --index-id "$(createIndex.index_Id)" \
 #             --display-name "$(dataSourceName)" \
 #             --configuration "$s3Config" \
-#             --role-arn "$(dataSourceRoleARN)" \
+#             --role-arn "$(createDataSourceRole.qBusinessDataSourceRoleARN)" \
 #             --output json
 #         )
 #         dataSourceId=$(echo "$dataSourceOutput" | jq -r '.dataSourceId')
@@ -148,7 +148,7 @@ steps:
             --index-id "$(createIndex.index_Id)" \
             --display-name "$(dataSourceName)" \
             --configuration "$s3Config" \
-            --role-arn "$(dataSourceRoleARN)" \
+            --role-arn "$(createDataSourceRole.qBusinessDataSourceRoleARN)" \
             --output json
         )
         dataSourceId=$(echo "$dataSourceOutput" | jq -r '.dataSourceId')

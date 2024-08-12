@@ -36,7 +36,7 @@ steps:
             --type "$(retrieverType)" \
             --display-name "$(retrieverName)" \
             --configuration "$retrieverConfig" \
-            --role-arn "$(retrieverRoleARN)" \
+            --role-arn "$(createDataSourceRole.qBusinessDataSourceRoleARN)" \
             --output json
         )
         retrieverId=$(echo "$retrieverOutput" | jq -r '.retrieverId')

@@ -5,7 +5,7 @@ variables:
   awsConnection: "AzToAWS"
   backendBucketName: "backend-tfstate"
   backendBucket: "$(serviceName)-$(backendBucketName)-$(regionShortName)"
-  identityCenterInstanceARN: "arn:aws:sso:::instance/ssoins-72231ea94955ab62"
+  identityCenterInstanceARN: "arn:aws:sso:::instance/ssoins-72231ea94955ab62" # "arn:aws:sso:::instance/ssoins-7223947d952b0dd2" flab 
 
   amazon-q-roleARN: "arn:aws:iam::975050226089:role/aws-service-role/qbusiness.amazonaws.com/AWSServiceRoleForQBusiness"
   amazon-q-roleName: "$(serviceName)-AmazonQRole-$(regionShortName)"
