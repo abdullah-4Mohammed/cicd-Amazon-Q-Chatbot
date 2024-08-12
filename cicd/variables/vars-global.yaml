@@ -12,8 +12,8 @@ variables:
 
   webExperiencRoleName: "$(serviceName)-WebExperienceRole-$(regionShortName)"
   web-experience-roleARN: "arn:aws:iam::975050226089:role/service-role/QBusiness-WebExperience-lrigl"
-  web-title: "Survey Assistant"
-  web-subtitle: "Researcher Survey Assistant"
+  web-title: "Survey Assistant - updat"
+  web-subtitle: "Researcher Survey Assistant - d"
   web-welcome_message: "I am your AI survey assistant. How I can help you today?"
   
   dataSourceRoleName: "$(serviceName)-DataSourceRole-$(regionShortName)"
