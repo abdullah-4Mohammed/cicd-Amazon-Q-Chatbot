@@ -7,6 +7,7 @@ trigger:
   paths:
     include:
     - cicd/templates
+    - cicd/variables
     - cicd/amazon-q-pipeline.yaml
     - cicd/infra-pipeline.yaml
     - deploy
