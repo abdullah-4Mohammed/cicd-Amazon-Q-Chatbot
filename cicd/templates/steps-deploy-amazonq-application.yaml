@@ -7,7 +7,7 @@ steps:
     scriptType: 'inline'
     inlineScript: |
       set -euxo pipefail
-
+      
       # List applications and get the application ID if it exists
       output=$(aws qbusiness list-applications --region "$(region)" --output json)
       applicationId=$(
