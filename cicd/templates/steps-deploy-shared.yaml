@@ -1,7 +1,7 @@
 steps:
 
 - task: AWSCLI@1
-  displayName: Create a bucket for backend 
+  displayName: Create a tfstate bucket for backend 
   inputs:
     awsCredentials: '$(awsConnection)'
     regionName: '$(region)'

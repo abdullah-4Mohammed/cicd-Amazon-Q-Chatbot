@@ -1,5 +1,5 @@
 variables:
-  serviceName: "survey-assistant"
+  serviceName: "course-selection"  #"survey-assistant"
   region: 'us-east-1'
   regionShortName: "use1"
   awsConnection: "AzToAWS"
@@ -12,9 +12,9 @@ variables:
 
   webExperiencRoleName: "$(serviceName)-WebExperienceRole-$(regionShortName)"
   web-experience-roleARN: "arn:aws:iam::975050226089:role/service-role/QBusiness-WebExperience-lrigl"
-  web-title: "Survey Assistant"
-  web-subtitle: "Researcher Survey Assistant"
-  web-welcome_message: "I am your AI survey assistant. How I can help you today?"
+  web-title: "University of Leicester" # "Survey Assistant"
+  web-subtitle: "Course Selection Assistant" #"Researcher Survey Assistant"
+  web-welcome_message: "Hi, I am your AI assistant. How I can help you today?"
   
   dataSourceRoleName: "$(serviceName)-DataSourceRole-$(regionShortName)"
   datasourceBucketName: "$(serviceName)-datasource-bucket-$(regionShortName)"

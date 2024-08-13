@@ -34,7 +34,7 @@ stages:
 
 - ${{ each env in parameters.environments }}:
   - stage: Deploy_${{ env }}
-    displayName: Deploy ${{ env }} Storage Terraform
+    displayName: Deploy ${{ env }} S3 Storage
     jobs:
     - job: Deploy_Terraform
       displayName: Deploy terraform infrastructure
