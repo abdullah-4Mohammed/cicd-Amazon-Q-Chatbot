@@ -8,7 +8,7 @@ steps:
     awsCommand: 's3api'
     awsSubCommand: 'create-bucket'
     awsArguments: >-
-      --bucket "$(datasourceBucketName)" 
+      --bucket "$(backendBucket)" 
       --region $(region)
 #      --create-bucket-configuration "{\"LocationConstraint\":\"$(region)\"}"
 # the --create-bucket-configuration cant be in us-east-1 but it nessary if you are using other region
