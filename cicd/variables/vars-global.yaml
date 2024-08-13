@@ -19,7 +19,7 @@ variables:
   dataSourceRoleName: "$(serviceName)-DataSourceRole-$(regionShortName)"
   datasourceBucketName: "$(serviceName)-datasource-bucket-$(regionShortName)"
   dataSourceRoleARN: "arn:aws:iam::975050226089:role/service-role/QBusiness-DataSource-199kf"
-  dataSourceName: "$(serviceName)-dataSource-$(regionShortName)"
+  dataSourceName: "$(serviceName)-datasource-$(regionShortName)"
 
   indexName: "$(serviceName)-index-$(regionShortName)"
 
