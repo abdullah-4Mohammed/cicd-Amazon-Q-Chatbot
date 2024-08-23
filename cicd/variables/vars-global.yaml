@@ -12,7 +12,7 @@ variables:
 
   webExperiencRoleName: "$(serviceName)-WebExperienceRole-$(regionShortName)"
   web-experience-roleARN: "arn:aws:iam::975050226089:role/service-role/QBusiness-WebExperience-lrigl"
-  web-title: "University of Leicester - ub" # "Survey Assistant"
+  web-title: "University of Leicester" # "Survey Assistant"
   web-subtitle: "Researcher Survey Assistant" #"Course Selection Assistant" #"Researcher Survey Assistant"
   web-welcome_message: "Hi, I am your AI assistant. How I can help you today?"
   
