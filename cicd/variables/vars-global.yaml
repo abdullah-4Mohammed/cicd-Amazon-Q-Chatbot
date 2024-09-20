@@ -1,5 +1,5 @@
 variables:
-  serviceName: "course-selection-" #"course-selection"  #"survey-assistant"
+  serviceName: "course-selection" #"course-selection"  #"survey-assistant"
   region: 'us-east-1'
   regionShortName: "use1"
   awsConnection: "AzToAWS"
