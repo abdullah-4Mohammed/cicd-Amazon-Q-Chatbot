@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  SageMakerBertModel:
+    Type: AWS::NativeRetriever::Model
+    Properties:
+      ModelName: "CourseAssistantBERTEmbeddingModel"
+      PrimaryContainer:
+        Image: "763104351884.dkr.ecr.us-west-2.amazonaws.com/huggingface-pytorch-training:1.6.0-gpu-py36-cu110-ubuntu18.04"
+        Mode: SingleModel
+        ModelDataUrl: "s3://course-assistant-bucket/BERT/model.tar.gz"  
+      ExecutionRoleArn: "arn:aws:iam::123456789012:role/SageMakerCourseAssistantRole"  
+  
+  SageMakerTrainingJob:
+    Type: AWS::Amazonq::TrainingJob
+    Properties:
+      TrainingJobName: "CourseAssistantBERTEmbeddingTraining"
+      AlgorithmSpecification:
+        TrainingImage: "763104351884.dkr.ecr.us-west-2.amazonaws.com/huggingface-pytorch-training:1.6.0-gpu-py36-cu110-ubuntu18.04"
+        TrainingInputMode: File
+      RoleArn: "arn:aws:iam::123456789012:role/SageMakerCourseAssistantRole"  
+      InputDataConfig:
+        - ChannelName: "train"
+          DataSource:
+            S3DataSource:
+              S3DataType: S3Prefix
+              S3Uri: "s3://course-assistant-bucket/bert/training-data/"  
+              S3DataDistributionType: FullyReplicated
+      OutputDataConfig:
+        S3OutputPath: "s3://course-assistant-bucket/bert/output/"  
+      ResourceConfig:
+        InstanceCount: 1
+        InstanceType: ml.p3.2xlarge  
+        VolumeSizeInGB: 50  
+      StoppingCondition:
+        MaxRuntimeInSeconds: 86400 
+
+Outputs:
+  SageMakerBertModelOutput:
+    Description: "The BERT-based model for the Course Selection Assistant embeddings"
+    Value: !Ref SageMakerBertModel
